@@ -20,6 +20,7 @@ class App extends React.Component {
         {Object.keys(this.state.pokemon).map((key) => (
           <Pokemon
             key={key}
+            index={key}
             name={this.state.pokemon[key].name}
             url={this.state.pokemon[key].url}
           ></Pokemon>
