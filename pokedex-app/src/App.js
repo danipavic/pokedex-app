@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
+import { Container, Row } from "react-bootstrap";
 import Pokemon from "./Components/Pokemon";
 
 class App extends React.Component {
@@ -17,14 +17,16 @@ class App extends React.Component {
   render() {
     return (
       <Container>
-        {Object.keys(this.state.pokemon).map((key) => (
-          <Pokemon
-            key={key}
-            index={key}
-            name={this.state.pokemon[key].name}
-            url={this.state.pokemon[key].url}
-          ></Pokemon>
-        ))}
+        <Row className="justify-content-center">
+          {Object.keys(this.state.pokemon).map((key) => (
+            <Pokemon
+              key={key}
+              index={key}
+              name={this.state.pokemon[key].name}
+              url={this.state.pokemon[key].url}
+            ></Pokemon>
+          ))}
+        </Row>
       </Container>
     );
   }
