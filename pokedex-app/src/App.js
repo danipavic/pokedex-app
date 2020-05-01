@@ -1,30 +1,36 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
+import { Container, Row } from "react-bootstrap";
 import Pokemon from "./Components/Pokemon";
+import getPokemonId from "./Utilites/getPokemonId";
 
 class App extends React.Component {
   state = {
     pokemon: {},
+    selectedLetter: "",
   };
 
   async componentDidMount() {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon");
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=500");
     const data = await response.json();
-    const pokemonObject = { ...data.results };
+    const pokemonObject = {};
+    data.results.forEach((pokemon) => {
+      const id = getPokemonId(pokemon.url);
+      pokemonObject[id] = { ...pokemon, id };
+    });
     this.setState({ pokemon: pokemonObject });
   }
 
   render() {
+    const { pokemon, selectedLetter } = this.state;
     return (
       <Container>
-        {Object.keys(this.state.pokemon).map((key) => (
-          <Pokemon
-            key={key}
-            index={key}
-            name={this.state.pokemon[key].name}
-            url={this.state.pokemon[key].url}
-          ></Pokemon>
-        ))}
+        <Row className="justify-content-center">
+          {Object.values(pokemon)
+            .filter(({ name }) => name.startsWith(selectedLetter))
+            .map(({ url, name, id }) => (
+              <Pokemon key={id} {...{ url, name, id }} />
+            ))}
+        </Row>
       </Container>
     );
   }
