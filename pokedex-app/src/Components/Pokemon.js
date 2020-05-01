@@ -1,12 +1,9 @@
 import React from "react";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { Badge } from "react-bootstrap";
+import { Badge, Button, Col } from "react-bootstrap";
 
 class Pokemon extends React.Component {
-  pokemonIndex = parseInt(this.props.index) + 1;
-
   render() {
+    const { id, name } = this.props;
     return (
       <Col
         sm={12}
@@ -15,19 +12,19 @@ class Pokemon extends React.Component {
       >
         <img
           className="w-25"
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemonIndex}.png`}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
           alt="pokemon"
         />
         <div className="w-75 d-flex align-items-center">
           <div className="d-flex flex-column align-items-start justify-content-center mr-auto">
-            <h3 className="text-capitalize">{`#${this.pokemonIndex} ${this.props.name}`}</h3>
-            <div>
+            <h3 className="text-capitalize mb-0">{`#${id} ${name}`}</h3>
+            <div className="mb-2">
               <Badge>Type1</Badge>
               <Badge>Type2</Badge>
             </div>
             <Button>Stats!</Button>
           </div>
-          <Button className="h-50">Catch!</Button>
+          <Button style={{ backgroundColor: "red" }}>Catch!</Button>
         </div>
       </Col>
     );
