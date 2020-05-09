@@ -25,7 +25,7 @@ class App extends React.Component {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${key}`);
       const data = await response.json();
       const types = [];
-      data.types.map((type) => {
+      data.types.forEach((type) => {
         return types.push(type.type.name);
       });
       pokemon[key].types = types;
