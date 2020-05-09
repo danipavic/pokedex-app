@@ -51,10 +51,18 @@ class Pokemon extends React.Component {
           className="w-75 d-flex align-items-center"
         >
           <div className="d-flex flex-column align-items-start justify-content-center mr-auto">
-            <h3 className="text-capitalize mb-0">{`#${id} ${name}`}</h3>
+            <h4 className="text-capitalize text-white my-2">{`#${id} ${name}`}</h4>
             <div>
               {types.map((type) => (
-                <Badge className="text-capitalize" key={type}>
+                <Badge
+                  className="text-capitalize text-white p-2 mr-2 mb-2"
+                  style={{
+                    backgroundColor: buttonBackgroundColor,
+                    borderColor: buttonBackgroundColor,
+                    boxShadow: "1px 2px 10px 1px rgba(0,0,0,0.5)",
+                  }}
+                  key={type}
+                >
                   {type}
                 </Badge>
               ))}
