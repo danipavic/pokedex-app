@@ -21,6 +21,7 @@ class PokemonModal extends React.Component {
     return (
       <div>
         <Button
+          className="mb-2"
           style={{
             backgroundColor: buttonBackgroundColor,
             borderColor: buttonBackgroundColor,
