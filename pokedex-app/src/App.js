@@ -1,16 +1,15 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import Pokemon from "./Components/Pokemon";
-import getPokemonId from "./Utilites/getPokemonId";
+import getPokemonId from "./Utilities/getPokemonId";
 
 class App extends React.Component {
   state = {
     pokemon: {},
     selectedLetter: "",
   };
-
-  async componentDidMount() {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=500");
+  getAllPokemons = async () => {
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon");
     const data = await response.json();
     const pokemonObject = {};
     data.results.forEach((pokemon) => {
@@ -18,6 +17,25 @@ class App extends React.Component {
       pokemonObject[id] = { ...pokemon, id };
     });
     this.setState({ pokemon: pokemonObject });
+  };
+
+  getPokemonType = async () => {
+    const { pokemon } = this.state;
+    Object.keys(pokemon).forEach(async (key) => {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${key}`);
+      const data = await response.json();
+      const types = [];
+      data.types.forEach((type) => {
+        return types.push(type.type.name);
+      });
+      pokemon[key].types = types;
+      this.setState({ pokemon });
+    });
+  };
+
+  async componentDidMount() {
+    await this.getAllPokemons();
+    await this.getPokemonType();
   }
 
   render() {
@@ -27,8 +45,8 @@ class App extends React.Component {
         <Row className="justify-content-center">
           {Object.values(pokemon)
             .filter(({ name }) => name.startsWith(selectedLetter))
-            .map(({ url, name, id }) => (
-              <Pokemon key={id} {...{ url, name, id }} />
+            .map(({ url, name, id, types }) => (
+              <Pokemon key={id} {...{ url, name, id, types }} />
             ))}
         </Row>
       </Container>
