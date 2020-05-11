@@ -5,7 +5,17 @@ import PokemonModal from "./pokemonModal";
 
 class Pokemon extends React.Component {
   render() {
-    const { id, name, types } = this.props;
+    const {
+      id,
+      name,
+      types,
+      abilities,
+      species,
+      height,
+      weight,
+      description,
+      stats,
+    } = this.props;
 
     if (!types) {
       return (
@@ -21,7 +31,11 @@ class Pokemon extends React.Component {
         </Col>
       );
     }
-    const buttonBackgroundColor = getTypeColor(types[0], "darken");
+    const primaryButtonBackgroundColor = getTypeColor(types[0], "darken");
+    const secondaryButtonBackgroundColor =
+      types.length === 2
+        ? getTypeColor(types[1])
+        : getTypeColor(types[0], "darken");
     const primaryBackgroundColor = getTypeColor(types[0]);
     const secondaryBackgroundColor =
       types.length === 2
@@ -35,8 +49,8 @@ class Pokemon extends React.Component {
       <Col
         sm={12}
         md={5}
-        className="d-flex border border-dark rounded shadow-lg my-2 mx-2 px-0"
-        style={{ boxShadow: "1px 2px 10px 1px rgba(0,0,0,0.5)" }}
+        className="d-flex border border-dark rounded my-2 mx-2 px-0"
+        style={{ boxShadow: "rgba(5, 5, 5, 0.5) 4px 3px 4px 1px" }}
       >
         <img
           style={{ backgroundColor: primaryBackgroundColor }}
@@ -57,9 +71,9 @@ class Pokemon extends React.Component {
                 <Badge
                   className="text-capitalize text-white p-2 mr-2 mb-2"
                   style={{
-                    backgroundColor: buttonBackgroundColor,
-                    borderColor: buttonBackgroundColor,
-                    boxShadow: "1px 2px 10px 1px rgba(0,0,0,0.5)",
+                    backgroundColor: primaryButtonBackgroundColor,
+                    borderColor: primaryButtonBackgroundColor,
+                    boxShadow: "0px 1px 4px 0px rgba(5,5,5,0.15)",
                   }}
                   key={type}
                 >
@@ -67,14 +81,30 @@ class Pokemon extends React.Component {
                 </Badge>
               ))}
             </div>
-            <PokemonModal types={types} />
+            <PokemonModal
+              {...{
+                id,
+                name,
+                types,
+                getGradientColor,
+                primaryBackgroundColor,
+                primaryButtonBackgroundColor,
+                secondaryButtonBackgroundColor,
+                abilities,
+                height,
+                weight,
+                description,
+                stats,
+                species,
+              }}
+            />
           </div>
           <Button
             className="mr-3"
             style={{
-              backgroundColor: buttonBackgroundColor,
-              borderColor: buttonBackgroundColor,
-              boxShadow: "1px 2px 10px 1px rgba(0,0,0,0.5)",
+              backgroundColor: primaryButtonBackgroundColor,
+              borderColor: primaryButtonBackgroundColor,
+              boxShadow: "0px 1px 4px 0px rgba(5,5,5,0.15)",
             }}
           >
             Catch!
